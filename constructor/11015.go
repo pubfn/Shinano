@@ -10,12 +10,7 @@ import (
 
 func Build_11015(msg *[]byte) ([]byte, int) {
 	sc_11015 := &protobuf.SC_11015{
-		BuffList: []*protobuf.BENEFITBUFF{
-			{Id: proto.Uint32(104), Timestamp: proto.Uint32(1792565999)},
-			{Id: proto.Uint32(103), Timestamp: proto.Uint32(1792565999)},
-			{Id: proto.Uint32(102), Timestamp: proto.Uint32(1792565999)},
-			{Id: proto.Uint32(101), Timestamp: proto.Uint32(1792565999)},
-		},
+		BuffList: []*protobuf.BENEFITBUFF{},
 	}
 
 	data, err := proto.Marshal(sc_11015)

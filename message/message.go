@@ -3,6 +3,7 @@ package message
 
 import (
 	"encoding/binary"
+	"fmt"
 )
 
 type Message struct {
@@ -18,8 +19,13 @@ func ReadMsg(data []byte) Message {
 		Id:    int(data[2])<<16 | int(data[3])<<8 | int(data[4]),
 		Index: int(binary.BigEndian.Uint16(data[5:7])),
 	}
-
-	msg.Message = data[7:msg.Len]
+	defer func() {
+		if r := recover(); r != nil {
+			fmt.Println("Ошибка при, ", msg.Len)
+			fmt.Printf("data при, % X/n", data)
+		}
+	}()
+	msg.Message = data[7:]
 	return msg
 }
 

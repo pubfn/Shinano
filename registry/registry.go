@@ -28,7 +28,7 @@ var registry = map[int][]Handler{
 		constructor.Build_17001,
 		constructor.Build_22300,
 		constructor.Build_12024,
-		constructor.Build_12001,
+		constructor.Build_12001, // character info
 		constructor.Build_12101,
 		constructor.Build_12201,
 		constructor.Build_63000,
@@ -41,7 +41,7 @@ var registry = map[int][]Handler{
 		constructor.Build_33114,
 		constructor.Build_14001,
 		constructor.Build_14101,
-		constructor.Build_15001,
+		constructor.Build_15001, // inventory mb
 		constructor.Build_20101,
 		constructor.Build_20201,
 		constructor.Build_19001,
@@ -50,10 +50,76 @@ var registry = map[int][]Handler{
 		constructor.Build_30001,
 		constructor.Build_30101,
 		constructor.Build_50000,
-		constructor.Build_11200,
-		constructor.Build_11213,
-		constructor.Build_11300,
+		// constructor.Build_11200,
+		// constructor.Build_11213,
+		constructor.Build_11300, // patch note
 		constructor.Build_11002,
+	},
+	25026: {
+		constructor.Build_25027,
+	},
+	34501: {
+		constructor.Build_34502,
+	},
+	11202: {
+		constructor.Build_11203,
+	},
+	23430: {
+		constructor.Build_23431,
+	},
+	34001: {
+		constructor.Build_34002,
+	},
+	18001: {
+		constructor.Build_18002,
+	},
+	60037: {
+		constructor.Build_60000,
+	},
+	62100: {
+		constructor.Build_62101,
+	},
+	26101: {
+		constructor.Build_26102,
+	},
+	11601: {
+		constructor.Build_11602,
+	},
+	24020: {
+		constructor.Build_24021,
+	},
+	27000: {
+		constructor.Build_27001,
+	},
+	29001: {
+		constructor.Build_29002,
+	},
+	11710: {
+		constructor.Build_11711,
+	},
+	11603: {
+		constructor.Build_11604,
+	},
+	60102: {
+		constructor.Build_60103,
+	},
+	27010: {
+		constructor.Build_27011,
+	},
+	12406: {
+		constructor.Build_12407, // here
+	},
+	16104: {
+		constructor.Build_16105,
+	},
+	13505: {
+		constructor.Build_13506,
+	},
+	15008: {
+		constructor.Build_15009,
+	},
+	11722: {
+		constructor.Build_11723,
 	},
 }
 

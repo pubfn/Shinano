@@ -2,6 +2,7 @@ package constructor
 
 import (
 	"log"
+	"time"
 
 	"Shinano/protobuf"
 
@@ -13,7 +14,7 @@ func Build_16200(msg *[]byte) ([]byte, int) {
 		CoreShopList:   []*protobuf.SHOPINFO{},
 		BlueShopList:   []*protobuf.SHOPINFO{},
 		NormalShopList: []*protobuf.SHOPINFO{},
-		Month:          proto.Uint32(10),
+		Month:          proto.Uint32(uint32(time.Now().Month())),
 	}
 
 	data, err := proto.Marshal(sc_16200)

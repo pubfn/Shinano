@@ -11,21 +11,21 @@ import (
 func Build_11003(msg *[]byte) ([]byte, int) {
 	sc_11003 := &protobuf.SC_11003{
 		Id:    proto.Uint32(478112442),
-		Name:  proto.String("Nigger"),
-		Level: proto.Uint32(3),
-		Exp:   proto.Uint32(20),
+		Name:  proto.String("penis?"),
+		Level: proto.Uint32(6),
+		Exp:   proto.Uint32(0),
 		ResourceList: []*protobuf.RESOURCE{
 			{
 				Type: proto.Uint32(14),
-				Num:  proto.Uint32(1488),
+				Num:  proto.Uint32(676767),
 			},
 			{
 				Type: proto.Uint32(1),
-				Num:  proto.Uint32(1337),
+				Num:  proto.Uint32(52),
 			},
 		},
-		AttackCount: proto.Uint32(2),
-		WinCount:    proto.Uint32(2),
+		AttackCount: proto.Uint32(1),
+		WinCount:    proto.Uint32(1),
 		Adv:         proto.String(""),
 		Character: []*protobuf.KVDATA{
 			{
@@ -47,22 +47,13 @@ func Build_11003(msg *[]byte) ([]byte, int) {
 		RegisterTime:       proto.Uint32(1790705327),
 		ShipCount:          proto.Uint32(8),
 		AccPayLv:           proto.Uint32(0),
-		StoryList: []uint32{
-			90019,
-			90018,
-			2400002,
-			2400001,
-			90049,
-			2,
-			1,
-			90012,
-		},
-		GuildWaitTime:  proto.Uint32(0),
-		ChatMsgBanTime: proto.Uint32(0),
-		FlagList:       []uint32{1000002},
-		MedalId:        []uint32{},
-		IconFrameList:  []*protobuf.IDTIMEINFO{},
-		ChatFrameList:  []*protobuf.IDTIMEINFO{},
+		StoryList:          []uint32{},
+		GuildWaitTime:      proto.Uint32(0),
+		ChatMsgBanTime:     proto.Uint32(0),
+		FlagList:           []uint32{1000002},
+		MedalId:            []uint32{},
+		IconFrameList:      []*protobuf.IDTIMEINFO{},
+		ChatFrameList:      []*protobuf.IDTIMEINFO{},
 		Display: &protobuf.DISPLAYINFO{
 			Icon:          proto.Uint32(201211),
 			Skin:          proto.Uint32(0),
@@ -101,13 +92,8 @@ func Build_11003(msg *[]byte) ([]byte, int) {
 		CdList:          []*protobuf.COOLDOWN{},
 		CommanderBagMax: proto.Uint32(0),
 		BattleUi:        proto.Uint32(0),
-		ActivityMedals: []*protobuf.KVDATA{
-			{
-				Key:   proto.Uint32(5115402),
-				Value: proto.Uint32(1791366312),
-			},
-		},
-		NewGuideIndex: proto.Uint32(19),
+		ActivityMedals:  []*protobuf.KVDATA{},
+		NewGuideIndex:   proto.Uint32(0),
 	}
 
 	data, err := proto.Marshal(sc_11003)
