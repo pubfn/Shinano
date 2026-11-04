@@ -17,7 +17,10 @@ func Build_13001(msg *[]byte) ([]byte, int) {
 			ActiveId:        proto.Uint32(0),
 			DailyCount:      proto.Uint32(0),
 		},
-		FleetList: []*protobuf.FLEET_INFO{},
+		FleetList:    []*protobuf.FLEET_INFO{},
+		Oil:          proto.Uint32(1),
+		TimeAcc:      proto.Uint32(0),
+		ExtraTimeMax: proto.Uint32(0),
 	}
 
 	data, err := proto.Marshal(sc)

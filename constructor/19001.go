@@ -14,7 +14,6 @@ func Build_19001(msg *[]byte) ([]byte, int) {
 		Food:                 proto.Uint32(0),
 		FoodMaxIncrease:      proto.Uint32(0),
 		FoodMaxIncreaseCount: proto.Uint32(0),
-		ShipIdList:           []uint32{},
 		FurnitureIdList:      []*protobuf.FURNITUREINFO{},
 		FloorNum:             proto.Uint32(1),
 		ExpPos:               proto.Uint32(2),

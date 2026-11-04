@@ -3,16 +3,34 @@ package constructor
 import (
 	"log"
 
+	"Shinano/db"
 	"Shinano/protobuf"
 
 	"google.golang.org/protobuf/proto"
 )
 
-func Build_10023(msg *[]byte) ([]byte, int) {
+func (b *Builder) Build_10023(msg *[]byte) ([]byte, int) {
+	var exists bool
+	fields := &protobuf.CS_10022{}
+
+	err := proto.Unmarshal(*msg, fields)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	err = b.DB.QueryRow("SELECT EXISTS(SELECT id FROM commander WHERE id = ?)", fields.GetAccountId()).Scan(&exists)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	if !exists {
+		db.NewCommader(int(fields.GetAccountId()), b.DB)
+	}
+
 	sc_10023 := &protobuf.SC_10023{
+		UserId:       proto.Uint32(fields.GetAccountId()),
 		Result:       proto.Uint32(0),
-		UserId:       proto.Uint32(478112442),
-		ServerTicket: proto.String("179200981798c7c4afcb98dd360b35d5e4ed40268b"),
+		ServerTicket: proto.String("0"),
 		DbLoad:       nil,
 		ServerLoad:   nil,
 	}

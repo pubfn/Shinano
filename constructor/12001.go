@@ -22,7 +22,7 @@ func Build_12001(msg *[]byte) ([]byte, int) {
 					{Id: proto.Uint32(0), SkinId: proto.Uint32(0)},
 				},
 				Energy:        proto.Uint32(150),
-				State:         &protobuf.SHIPSTATE{State: proto.Uint32(0)},
+				State:         proto.Uint32(0),
 				IsLocked:      proto.Uint32(0),
 				TransformList: []*protobuf.TRANSFORM_INFO{},
 				SkillIdList: []*protobuf.SHIPSKILL{
@@ -48,7 +48,7 @@ func Build_12001(msg *[]byte) ([]byte, int) {
 					{Id: proto.Uint32(0), SkinId: proto.Uint32(0)},
 				},
 				Energy:        proto.Uint32(150),
-				State:         &protobuf.SHIPSTATE{State: proto.Uint32(0)},
+				State:         proto.Uint32(0),
 				IsLocked:      proto.Uint32(0),
 				TransformList: []*protobuf.TRANSFORM_INFO{},
 				SkillIdList: []*protobuf.SHIPSKILL{
@@ -74,7 +74,7 @@ func Build_12001(msg *[]byte) ([]byte, int) {
 					{Id: proto.Uint32(0), SkinId: proto.Uint32(0)},
 				},
 				Energy:        proto.Uint32(150),
-				State:         &protobuf.SHIPSTATE{State: proto.Uint32(0)},
+				State:         proto.Uint32(0),
 				IsLocked:      proto.Uint32(0),
 				TransformList: []*protobuf.TRANSFORM_INFO{},
 				SkillIdList: []*protobuf.SHIPSKILL{
@@ -100,7 +100,7 @@ func Build_12001(msg *[]byte) ([]byte, int) {
 					{Id: proto.Uint32(0), SkinId: proto.Uint32(0)},
 				},
 				Energy:        proto.Uint32(150),
-				State:         &protobuf.SHIPSTATE{State: proto.Uint32(0)},
+				State:         proto.Uint32(0),
 				IsLocked:      proto.Uint32(1),
 				TransformList: []*protobuf.TRANSFORM_INFO{},
 				SkillIdList: []*protobuf.SHIPSKILL{
@@ -127,7 +127,7 @@ func Build_12001(msg *[]byte) ([]byte, int) {
 					{Id: proto.Uint32(0), SkinId: proto.Uint32(0)},
 				},
 				Energy:        proto.Uint32(150),
-				State:         &protobuf.SHIPSTATE{State: proto.Uint32(0)},
+				State:         proto.Uint32(0),
 				IsLocked:      proto.Uint32(1),
 				TransformList: []*protobuf.TRANSFORM_INFO{},
 				SkillIdList: []*protobuf.SHIPSKILL{
@@ -153,7 +153,7 @@ func Build_12001(msg *[]byte) ([]byte, int) {
 					{Id: proto.Uint32(0), SkinId: proto.Uint32(0)},
 				},
 				Energy:        proto.Uint32(146),
-				State:         &protobuf.SHIPSTATE{State: proto.Uint32(0)},
+				State:         proto.Uint32(0),
 				IsLocked:      proto.Uint32(1),
 				TransformList: []*protobuf.TRANSFORM_INFO{},
 				SkillIdList: []*protobuf.SHIPSKILL{
@@ -179,7 +179,7 @@ func Build_12001(msg *[]byte) ([]byte, int) {
 					{Id: proto.Uint32(0), SkinId: proto.Uint32(0)},
 				},
 				Energy:        proto.Uint32(146),
-				State:         &protobuf.SHIPSTATE{State: proto.Uint32(0)},
+				State:         proto.Uint32(0),
 				IsLocked:      proto.Uint32(0),
 				TransformList: []*protobuf.TRANSFORM_INFO{},
 				SkillIdList: []*protobuf.SHIPSKILL{
@@ -205,7 +205,7 @@ func Build_12001(msg *[]byte) ([]byte, int) {
 					{Id: proto.Uint32(0), SkinId: proto.Uint32(0)},
 				},
 				Energy:        proto.Uint32(146),
-				State:         &protobuf.SHIPSTATE{State: proto.Uint32(0)},
+				State:         proto.Uint32(0),
 				IsLocked:      proto.Uint32(0),
 				TransformList: []*protobuf.TRANSFORM_INFO{},
 				SkillIdList: []*protobuf.SHIPSKILL{

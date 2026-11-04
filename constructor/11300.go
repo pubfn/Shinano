@@ -14,10 +14,10 @@ func Build_11300(msg *[]byte) ([]byte, int) {
 			{
 				Id:         proto.Uint32(6),
 				Version:    proto.String("1"),
-				BtnTitle:   proto.String("10/15 Update"),
+				BtnTitle:   proto.String("hihihihih"),
 				Title:      proto.String("Patch Note"),
 				TitleImage: proto.String("https://blhxusstatic.yo-star.com/pic/260326_OA4bigldklYOjgVP5SyeJa.png"),
-				TimeDesc:   proto.String("10/14/2026"),
+				TimeDesc:   proto.String("10/67/2026"),
 				Content:    proto.String("hahah penis"),
 				TagType:    proto.Uint32(1),
 				Icon:       proto.Uint32(2),

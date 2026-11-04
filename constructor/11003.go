@@ -1,6 +1,7 @@
 package constructor
 
 import (
+	"fmt"
 	"log"
 
 	"Shinano/protobuf"
@@ -8,35 +9,40 @@ import (
 	"google.golang.org/protobuf/proto"
 )
 
-func Build_11003(msg *[]byte) ([]byte, int) {
+func (b *Builder) Build_11003(msg *[]byte) ([]byte, int) {
+	var id, level, exp uint32
+	var ResourceList []*protobuf.RESOURCE
+
+	err := b.DB.QueryRow("select id, level, exp from commander").Scan(&id, &level, &exp)
+	if err != nil {
+		fmt.Print("не найден комм")
+		log.Fatal(err)
+	}
+
+	rows, err := b.DB.Query("select * from resourcelist ")
+
+	defer rows.Close()
+	for rows.Next() {
+		var buf protobuf.RESOURCE
+		rows.Scan(&buf.Type, &buf.Num)
+		ResourceList = append(ResourceList, &buf)
+	}
+
 	sc_11003 := &protobuf.SC_11003{
-		Id:    proto.Uint32(478112442),
-		Name:  proto.String("penis?"),
-		Level: proto.Uint32(6),
-		Exp:   proto.Uint32(0),
-		ResourceList: []*protobuf.RESOURCE{
-			{
-				Type: proto.Uint32(14),
-				Num:  proto.Uint32(676767),
-			},
-			{
-				Type: proto.Uint32(1),
-				Num:  proto.Uint32(52),
-			},
-		},
-		AttackCount: proto.Uint32(1),
-		WinCount:    proto.Uint32(1),
-		Adv:         proto.String(""),
-		Character: []*protobuf.KVDATA{
-			{
-				Key:   proto.Uint32(1),
-				Value: proto.Uint32(0),
-			},
-		},
+		Id:                 proto.Uint32(id), //
+		Name:               proto.String("penis?"),
+		Level:              proto.Uint32(level), //
+		Exp:                proto.Uint32(exp),   //
+		ResourceList:       ResourceList,
+		AttackCount:        proto.Uint32(1),
+		WinCount:           proto.Uint32(1),
+		Adv:                proto.String(""),
+		Character:          []*protobuf.KVDATA{{Key: proto.Uint32(1), Value: proto.Uint32(0)}},
 		ShipBagMax:         proto.Uint32(150),
 		EquipBagMax:        proto.Uint32(300),
 		GmFlag:             proto.Uint32(0),
 		Rank:               proto.Uint32(1),
+		LoadingPicOpenFlag: proto.Uint32(0),
 		PvpAttackCount:     proto.Uint32(0),
 		CollectAttackCount: proto.Uint32(0),
 		GuideIndex:         proto.Uint32(1),
@@ -45,17 +51,17 @@ func Build_11003(msg *[]byte) ([]byte, int) {
 		CardList:           []*protobuf.CARDINFO{},
 		MaxRank:            proto.Uint32(0),
 		RegisterTime:       proto.Uint32(1790705327),
-		ShipCount:          proto.Uint32(8),
+		ShipCount:          proto.Uint32(0),
 		AccPayLv:           proto.Uint32(0),
 		StoryList:          []uint32{},
 		GuildWaitTime:      proto.Uint32(0),
 		ChatMsgBanTime:     proto.Uint32(0),
-		FlagList:           []uint32{1000002},
+		FlagList:           []uint32{},
 		MedalId:            []uint32{},
 		IconFrameList:      []*protobuf.IDTIMEINFO{},
 		ChatFrameList:      []*protobuf.IDTIMEINFO{},
 		Display: &protobuf.DISPLAYINFO{
-			Icon:          proto.Uint32(201211),
+			Icon:          proto.Uint32(0),
 			Skin:          proto.Uint32(0),
 			IconFrame:     proto.Uint32(0),
 			ChatFrame:     proto.Uint32(0),
