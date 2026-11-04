@@ -8,6 +8,8 @@ import (
 	"log"
 	"net"
 
+	"Shinano/constructor"
+	"Shinano/db"
 	"Shinano/message"
 	"Shinano/registry"
 )
@@ -17,6 +19,9 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	builder := constructor.Builder{DB: db.Init()}
+	constructor.NewRegistry(&builder)
+
 	for {
 		con, err := l.Accept()
 		if err != nil {

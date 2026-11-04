@@ -18,17 +18,19 @@ func (b *Builder) Build_10023(msg *[]byte) ([]byte, int) {
 		log.Fatal(err)
 	}
 
-	err = b.DB.QueryRow("SELECT EXISTS(SELECT id FROM commander WHERE id = ?)", fields.GetAccountId()).Scan(&exists)
-	if err != nil {
-		log.Fatal(err)
-	}
+	accountID := int64(fields.GetAccountId())
+
+	err = b.DB.QueryRow(
+		"SELECT EXISTS(SELECT 1 FROM commander WHERE id = ?)",
+		accountID,
+	).Scan(&exists)
 
 	if !exists {
-		db.NewCommader(int(fields.GetAccountId()), b.DB)
+		db.NewCommader(int(accountID), b.DB)
 	}
 
 	sc_10023 := &protobuf.SC_10023{
-		UserId:       proto.Uint32(fields.GetAccountId()),
+		UserId:       proto.Uint32(uint32(accountID)),
 		Result:       proto.Uint32(0),
 		ServerTicket: proto.String("0"),
 		DbLoad:       nil,

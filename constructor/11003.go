@@ -28,6 +28,16 @@ func (b *Builder) Build_11003(msg *[]byte) ([]byte, int) {
 		ResourceList = append(ResourceList, &buf)
 	}
 
+	// ResourceList: []*protobuf.RESOURCE{ //
+	// 	{
+	// 		Type: proto.Uint32(4),
+	// 		Num:  proto.Uint32(676767),
+	// 	},
+	// 	{
+	// 		Type: proto.Uint32(1),
+	// 		Num:  proto.Uint32(52),
+	// 	},
+	// },
 	sc_11003 := &protobuf.SC_11003{
 		Id:                 proto.Uint32(id), //
 		Name:               proto.String("penis?"),
