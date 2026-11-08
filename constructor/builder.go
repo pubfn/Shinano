@@ -23,6 +23,9 @@ func NewRegistry(b *Builder) {
 		10022: {
 			b.Build_10023, // recive accId
 		},
+		10100: {
+			Build_10101, // ping
+		},
 		11001: {
 			Build_11000,
 			b.Build_11003,
@@ -34,7 +37,7 @@ func NewRegistry(b *Builder) {
 			Build_17001,
 			Build_22300,
 			Build_12024,
-			Build_12001, // character info
+			b.Build_12001, // ship list info
 			Build_12101,
 			Build_12201,
 			Build_63000,

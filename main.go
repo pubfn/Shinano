@@ -8,6 +8,7 @@ import (
 	"log"
 	"net"
 
+	"Shinano/cfg"
 	"Shinano/constructor"
 	"Shinano/db"
 	"Shinano/message"
@@ -19,24 +20,29 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+
 	builder := constructor.Builder{DB: db.Init()}
 	constructor.NewRegistry(&builder)
+	cfg.LoadGameData()
 
 	for {
 		con, err := l.Accept()
 		if err != nil {
-			log.Fatal(err)
+			log.Println(err)
+			continue
 		}
 		go conn(con)
 	}
 }
 
 func conn(c net.Conn) {
+	defer c.Close()
 	reader := bufio.NewReader(c)
 	for {
 		len, err := reader.Peek(2)
 		if err != nil {
-			log.Fatal(err)
+			log.Println("error:", err)
+			return
 		}
 		data := make([]byte, int(binary.BigEndian.Uint16(len[0:2]))+2)
 		_, _ = io.ReadFull(reader, data)
