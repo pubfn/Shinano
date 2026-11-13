@@ -14,7 +14,6 @@ func Migrate(db *sql.DB) error {
 	if err != nil {
 		return err
 	}
-
 	m, err := migrate.NewWithDatabaseInstance(
 		"file://db/migrations",
 		"sqlite",

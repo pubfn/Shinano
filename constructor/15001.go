@@ -4,13 +4,18 @@ import (
 	"log"
 
 	"Shinano/protobuf"
+	"Shinano/repository"
 
 	"google.golang.org/protobuf/proto"
 )
 
-func Build_15001(msg *[]byte) ([]byte, int) {
+func (b *Builder) Build_15001(msg *[]byte) ([]byte, int) {
+	itemList, err := repository.GetItems(b.DB)
+	if err != nil {
+		log.Fatal(err)
+	}
 	sc_15001 := &protobuf.SC_15001{
-		ItemList:     []*protobuf.ITEMINFO{},
+		ItemList:     itemList,
 		LimitList:    []*protobuf.ITEMINFO{},
 		ItemMiscList: []*protobuf.ITEMMISC{},
 	}

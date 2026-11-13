@@ -3,14 +3,13 @@ package constructor
 import (
 	"log"
 
-	"Shinano/db"
 	"Shinano/protobuf"
+	"Shinano/repository"
 
 	"google.golang.org/protobuf/proto"
 )
 
 func (b *Builder) Build_10023(msg *[]byte) ([]byte, int) {
-	var exists bool
 	fields := &protobuf.CS_10022{}
 
 	err := proto.Unmarshal(*msg, fields)
@@ -20,13 +19,8 @@ func (b *Builder) Build_10023(msg *[]byte) ([]byte, int) {
 
 	accountID := int64(fields.GetAccountId())
 
-	err = b.DB.QueryRow(
-		"SELECT EXISTS(SELECT 1 FROM commander WHERE id = ?)",
-		accountID,
-	).Scan(&exists)
-
-	if !exists {
-		db.NewCommader(int(accountID), b.DB)
+	if err = repository.CheckCommander(b.DB, accountID); err != nil {
+		log.Fatal(err)
 	}
 
 	sc_10023 := &protobuf.SC_10023{

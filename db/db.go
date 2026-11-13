@@ -2,7 +2,6 @@ package db
 
 import (
 	"database/sql"
-	"fmt"
 	"log"
 
 	"Shinano/cfg"
@@ -29,18 +28,47 @@ func Init() *sql.DB {
 	return db
 }
 
-func NewCommader(accId int, db *sql.DB) {
-	_, err := db.Exec("INSERT INTO commander (id, name, level, exp) VALUES (?, ?, ?, ?)", accId, "7sdu", 6, 0)
-	_, err = db.Exec("INSERT INTO resourcelist (type, num) VALUES (?, ?)", 4, 5252)
-	_, err = db.Exec("INSERT INTO resourcelist (type, num) VALUES (?, ?)", 1, 6767)
-	_, err = db.Exec("insert into shiplist (id, templateId, level,exp,islocked,skinid) values (?,?,?,?,?,?)", 1, 307084, 67, 100, 0, 0)
-
-	for _, v := range cfg.Skillid[307084].Id {
-		_, err = db.Exec("insert into skillidlist (skillid, skilllvl, skillexp, shipid) values (?,?,?,?)", v, 2, 50, 307084)
-		fmt.Println(v)
-	}
-
+func NewCommader(accId int, db *sql.DB) error {
+	tx, err := db.Begin()
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
+	defer tx.Rollback()
+
+	funcs := []func() error{
+		func() error {
+			_, err = tx.Exec("INSERT INTO commander (id, name, level, exp) VALUES (?, ?, ?, ?)", accId, "7sdu", 6, 0)
+			return err
+		},
+		func() error {
+			_, err = tx.Exec("INSERT INTO resourcelist (type, num) VALUES (?, ?)", 4, 5252)
+			return err
+		},
+		func() error {
+			_, err = tx.Exec("INSERT INTO resourcelist (type, num) VALUES (?, ?)", 1, 6767)
+			return err
+		},
+		func() error {
+			_, err = tx.Exec("insert into shiplist (id, templateId, level,exp,islocked,skinid) values (?,?,?,?,?,?)", 1, 307084, 67, 100, 0, 0)
+			return err
+		},
+		func() error {
+			_, err = tx.Exec("insert into inventory(id, count) values (?,?)", 20001, 6742)
+			return err
+		},
+		func() error {
+			for _, v := range cfg.SkillID[307084].ID {
+				_, err = tx.Exec("insert into skillidlist (skillid, skilllvl, skillexp, shipid) values (?,?,?,?)", v, 2, 50, 307084)
+			}
+			return err
+		},
+	}
+
+	for _, transaction := range funcs {
+		if err := transaction(); err != nil {
+			return err
+		}
+	}
+
+	return tx.Commit()
 }

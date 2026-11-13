@@ -1,9 +1,7 @@
-// Package message suck dick
-package message
+package packets
 
 import (
 	"encoding/binary"
-	"fmt"
 )
 
 type Message struct {
@@ -13,18 +11,12 @@ type Message struct {
 	Message []byte
 }
 
-func ReadMsg(data []byte) Message {
+func ReadPacket(data []byte) Message {
 	msg := Message{
 		Len:   int(binary.BigEndian.Uint16(data[0:2])),
 		Id:    int(data[2])<<16 | int(data[3])<<8 | int(data[4]),
 		Index: int(binary.BigEndian.Uint16(data[5:7])),
 	}
-	defer func() {
-		if r := recover(); r != nil {
-			fmt.Println("Ошибка при, ", msg.Len)
-			fmt.Printf("data при, % X/n", data)
-		}
-	}()
 	msg.Message = data[7:]
 	return msg
 }

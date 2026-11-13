@@ -10,11 +10,11 @@ import (
 
 func Build_12024(msg *[]byte) ([]byte, int) {
 	sc := &protobuf.SC_12024{
-		WorklistCount: proto.Uint32(2),
+		WorklistCount: proto.Uint32(10),
 		WorklistList:  []*protobuf.BUILDINFO{},
 		DrawCount_1:   proto.Uint32(0),
 		DrawCount_10:  proto.Uint32(0),
-		ExchangeCount: proto.Uint32(7),
+		ExchangeCount: proto.Uint32(0),
 	}
 
 	data, err := proto.Marshal(sc)

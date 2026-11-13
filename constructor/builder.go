@@ -28,7 +28,7 @@ func NewRegistry(b *Builder) {
 		},
 		11001: {
 			Build_11000,
-			b.Build_11003,
+			b.Build_11003, // return comm data
 			Build_11015,
 			Build_11752,
 			Build_22001,
@@ -36,7 +36,7 @@ func NewRegistry(b *Builder) {
 			Build_25001,
 			Build_17001,
 			Build_22300,
-			Build_12024,
+			Build_12024,   // pull statistic
 			b.Build_12001, // ship list info
 			Build_12101,
 			Build_12201,
@@ -51,7 +51,7 @@ func NewRegistry(b *Builder) {
 			Build_33114,
 			Build_14001,
 			Build_14101,
-			Build_15001, // inventory mb
+			b.Build_15001, // inventory mb
 			Build_20001,
 			Build_20101,
 			Build_11210,
@@ -66,6 +66,37 @@ func NewRegistry(b *Builder) {
 			Build_11213,
 			Build_11300, // patch note
 			Build_11002,
+		},
+
+		11017: {
+			Build_11018,
+		},
+		11401: {
+			Build_11402,
+		},
+		11701: {
+			Build_11702,
+		},
+		11705: {
+			Build_11706, // inst message
+		},
+		11019: {
+			Build_11020,
+		},
+		12002: {
+			Build_12003,
+		},
+		12022: {
+			Build_12023, // lock ship
+		},
+		12043: {
+			Build_12044,
+		},
+		12045: {
+			Build_12046,
+		},
+		12025: {
+			Build_12026,
 		},
 		25026: {
 			Build_25027,

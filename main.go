@@ -11,8 +11,7 @@ import (
 	"Shinano/cfg"
 	"Shinano/constructor"
 	"Shinano/db"
-	"Shinano/message"
-	"Shinano/registry"
+	"Shinano/packets"
 )
 
 func main() {
@@ -23,7 +22,10 @@ func main() {
 
 	builder := constructor.Builder{DB: db.Init()}
 	constructor.NewRegistry(&builder)
-	cfg.LoadGameData()
+	err = cfg.LoadGameData()
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	for {
 		con, err := l.Accept()
@@ -46,8 +48,8 @@ func conn(c net.Conn) {
 		}
 		data := make([]byte, int(binary.BigEndian.Uint16(len[0:2]))+2)
 		_, _ = io.ReadFull(reader, data)
-		msg := message.ReadMsg(data)
+		msg := packets.ReadPacket(data)
 		fmt.Println("Message Id", msg.Id)
-		registry.Hande(msg.Id, &msg.Message, c, msg.Index)
+		packets.Hande(msg.Id, &msg.Message, c, msg.Index)
 	}
 }
