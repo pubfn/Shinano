@@ -28,7 +28,7 @@ func NewRegistry(b *Builder) {
 		},
 		11001: {
 			Build_11000,
-			b.Build_11003, // return comm data
+			b.Build_11003, // comm data
 			Build_11015,
 			Build_11752,
 			Build_22001,
@@ -96,7 +96,7 @@ func NewRegistry(b *Builder) {
 			Build_12046,
 		},
 		12025: {
-			Build_12026,
+			b.Build_12026,
 		},
 		25026: {
 			Build_25027,

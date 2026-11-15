@@ -1,6 +1,7 @@
 package constructor
 
 import (
+	"fmt"
 	"log"
 	"time"
 
@@ -23,6 +24,9 @@ func Build_12003(msg *[]byte) ([]byte, int) {
 
 	buildId := buildData.GetId()
 	for range buildData.GetCount() {
+
+		fmt.Println(buildData.GetId())
+		fmt.Println(buildData.GetCosttype())
 		build := protobuf.BUILDINFO{
 			Time:       proto.Uint32(uint32(curTime)),
 			FinishTime: proto.Uint32(uint32(curTime + 3)),

@@ -45,11 +45,11 @@ func NewCommader(accId int, db *sql.DB) error {
 			return err
 		},
 		func() error {
-			_, err = tx.Exec("INSERT INTO resourcelist (type, num) VALUES (?, ?)", 1, 6767)
+			_, err = tx.Exec("INSERT INTO resourcelist (type, num) VALUES (?, ?)", 1, 676767)
 			return err
 		},
 		func() error {
-			_, err = tx.Exec("insert into shiplist (id, templateId, level,exp,islocked,skinid) values (?,?,?,?,?,?)", 1, 307084, 67, 100, 0, 0)
+			_, err = tx.Exec("insert into shiplist (templateId, level,exp,islocked,skinid) values (?,?,?,?,?)", 307084, 67, 100, 0, 0)
 			return err
 		},
 		func() error {

@@ -12,7 +12,7 @@ func Build_13001(msg *[]byte) ([]byte, int) {
 	sc := &protobuf.SC_13001{
 		ChapterList: []*protobuf.CHAPTERINFO{},
 		ReactChapter: &protobuf.REACTCHAPTER_INFO{
-			Count:           proto.Uint32(0),
+			Count:           proto.Uint32(3),
 			ActiveTimestamp: proto.Uint32(0),
 			ActiveId:        proto.Uint32(0),
 			DailyCount:      proto.Uint32(0),

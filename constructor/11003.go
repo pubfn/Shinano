@@ -1,38 +1,30 @@
 package constructor
 
 import (
-	"fmt"
 	"log"
 
 	"Shinano/protobuf"
+	"Shinano/repository"
 
 	"google.golang.org/protobuf/proto"
 )
 
 func (b *Builder) Build_11003(msg *[]byte) ([]byte, int) {
-	var id, level, exp uint32
-	var ResourceList []*protobuf.RESOURCE
-
-	err := b.DB.QueryRow("select id, level, exp from commander").Scan(&id, &level, &exp)
+	commander, err := repository.GetCommanderData(b.DB)
 	if err != nil {
-		fmt.Print("не найден комм")
 		log.Fatal(err)
 	}
 
-	rows, err := b.DB.Query("select * from resourcelist ")
-
-	defer rows.Close()
-	for rows.Next() {
-		var buf protobuf.RESOURCE
-		rows.Scan(&buf.Type, &buf.Num)
-		ResourceList = append(ResourceList, &buf)
+	ResourceList, err := repository.GetResources(b.DB)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	sc_11003 := &protobuf.SC_11003{
-		Id:                 proto.Uint32(id), //
+		Id:                 proto.Uint32(commander.Id), //
 		Name:               proto.String("penis?"),
-		Level:              proto.Uint32(level), //
-		Exp:                proto.Uint32(exp),   //
+		Level:              proto.Uint32(commander.Level), //
+		Exp:                proto.Uint32(commander.Exp),   //
 		ResourceList:       ResourceList,
 		AttackCount:        proto.Uint32(1),
 		WinCount:           proto.Uint32(1),
@@ -53,13 +45,15 @@ func (b *Builder) Build_11003(msg *[]byte) ([]byte, int) {
 		RegisterTime:       proto.Uint32(1790705327),
 		ShipCount:          proto.Uint32(0),
 		AccPayLv:           proto.Uint32(0),
-		StoryList:          []uint32{},
-		GuildWaitTime:      proto.Uint32(0),
-		ChatMsgBanTime:     proto.Uint32(0),
-		FlagList:           []uint32{},
-		MedalId:            []uint32{},
-		IconFrameList:      []*protobuf.IDTIMEINFO{},
-		ChatFrameList:      []*protobuf.IDTIMEINFO{},
+		StoryList: []uint32{
+			2400001, // insta opening
+		},
+		GuildWaitTime:  proto.Uint32(0),
+		ChatMsgBanTime: proto.Uint32(0),
+		FlagList:       []uint32{},
+		MedalId:        []uint32{},
+		IconFrameList:  []*protobuf.IDTIMEINFO{},
+		ChatFrameList:  []*protobuf.IDTIMEINFO{},
 		Display: &protobuf.DISPLAYINFO{
 			Icon:          proto.Uint32(0),
 			Skin:          proto.Uint32(0),
@@ -99,7 +93,7 @@ func (b *Builder) Build_11003(msg *[]byte) ([]byte, int) {
 		CommanderBagMax: proto.Uint32(0),
 		BattleUi:        proto.Uint32(0),
 		ActivityMedals:  []*protobuf.KVDATA{},
-		NewGuideIndex:   proto.Uint32(0),
+		NewGuideIndex:   proto.Uint32(1),
 	}
 
 	data, err := proto.Marshal(sc_11003)

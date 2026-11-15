@@ -9,7 +9,52 @@ import (
 	"google.golang.org/protobuf/proto"
 )
 
-func LoadShips(b *sql.DB, template *protobuf.SHIPINFO) ([]*protobuf.SHIPINFO, error) {
+var template = &protobuf.SHIPINFO{
+	EquipInfoList: []*protobuf.EQUIPSKIN_INFO{
+		{Id: proto.Uint32(0), SkinId: proto.Uint32(0)},
+		{Id: proto.Uint32(0), SkinId: proto.Uint32(0)},
+		{Id: proto.Uint32(0), SkinId: proto.Uint32(0)},
+		{Id: proto.Uint32(0), SkinId: proto.Uint32(0)},
+		{Id: proto.Uint32(0), SkinId: proto.Uint32(0)},
+	},
+	Energy:        proto.Uint32(146),
+	State:         proto.Uint32(0),
+	TransformList: []*protobuf.TRANSFORM_INFO{},
+	Intimacy:      proto.Uint32(9000), Proficiency: proto.Uint32(0),
+	StrengthList: []*protobuf.STRENGTH_INFO{},
+	CreateTime:   proto.Uint32(1790705327),
+	Propose:      proto.Uint32(1),
+	Name:         proto.String(""), ChangeNameTimestamp: proto.Uint32(0),
+	MaxLevel: proto.Uint32(100), CommonFlag: proto.Uint32(0),
+	ActivityNpc: proto.Uint32(0), MetaRepairList: []uint32{},
+	SkinShadowList: []*protobuf.KVDATA{}, CharRandomFlag: []uint32{},
+}
+
+func AddShip(b *sql.DB, shipId int) error {
+	_, err := b.Exec("insert into shiplist (templateId, level,exp,islocked,skinid) values (?,?,?,?,?)", shipId, 1, 0, 0, 0)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func CreateShip(b *sql.DB, shipId int) (*protobuf.SHIPINFO, error) {
+	var id int
+	ship := proto.Clone(template).(*protobuf.SHIPINFO)
+
+	if err := b.QueryRow(`
+    SELECT id FROM Shiplist ORDER BY id DESC LIMIT 1
+    `).Scan(&id); err != nil {
+		return nil, err
+	}
+
+	ship.IsLocked, ship.TemplateId, ship.Level, ship.Exp, ship.SkinId, ship.Id =
+		proto.Uint32(0), proto.Uint32(uint32(shipId)), proto.Uint32(1), proto.Uint32(0), proto.Uint32(0), proto.Uint32(uint32(id))
+
+	return ship, nil
+}
+
+func LoadShips(b *sql.DB) ([]*protobuf.SHIPINFO, error) {
 	ship, err := b.Query("select * from Shiplist")
 	if err != nil {
 		return nil, err

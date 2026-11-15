@@ -10,7 +10,7 @@ import (
 )
 
 func (b *Builder) Build_15001(msg *[]byte) ([]byte, int) {
-	itemList, err := repository.GetItems(b.DB)
+	itemList, err := repository.GetInventory(b.DB)
 	if err != nil {
 		log.Fatal(err)
 	}
