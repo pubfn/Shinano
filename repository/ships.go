@@ -2,7 +2,6 @@ package repository
 
 import (
 	"database/sql"
-	"fmt"
 
 	"Shinano/protobuf"
 
@@ -35,11 +34,6 @@ var template = &protobuf.SHIPINFO{
 }
 
 func AddShip(b DBExecutor, shipId int) error {
-	fmt.Println("AddShip called with shipId:", shipId)
-
-	if shipId == 0 {
-		return fmt.Errorf("AddShip: shipId is zero")
-	}
 	_, err := b.Exec("insert into shiplist (templateId, level,exp,islocked,skinid) values (?,?,?,?,?)", shipId, 1, 0, 0, 0)
 	if err != nil {
 		return err

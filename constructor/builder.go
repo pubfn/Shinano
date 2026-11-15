@@ -2,6 +2,8 @@ package constructor
 
 import (
 	"database/sql"
+
+	"Shinano/constructor/zero_proto"
 )
 
 type Handler func(data *[]byte) ([]byte, int)
@@ -21,55 +23,54 @@ func NewBuilder(db *sql.DB) *Builder {
 func NewRegistry(b *Builder) {
 	Registry = map[int][]Handler{
 		10022: {
-			b.Build_10023, // recive accId
+			b.Build_10023,
 		},
 		10100: {
-			Build_10101, // ping
+			zero_proto.Build_10101,
 		},
 		11001: {
-			Build_11000,
-			b.Build_11003, // comm data
-			Build_11015,
-			Build_11752,
-			Build_22001,
-			Build_26120,
-			Build_25001,
-			Build_17001,
-			Build_22300,
-			Build_12024,   // pull statistic
-			b.Build_12001, // ship list info
-			Build_12101,
+			zero_proto.Build_11000,
+			b.Build_11003,
+			zero_proto.Build_11015,
+			zero_proto.Build_11752,
+			zero_proto.Build_22001,
+			zero_proto.Build_26120,
+			zero_proto.Build_25001,
+			zero_proto.Build_17001,
+			zero_proto.Build_22300,
+			Build_12024,
+			b.Build_12001,
+			zero_proto.Build_12101,
 			Build_12201,
-			Build_63000,
-			Build_63100,
-			Build_64000,
-			Build_13001,
-			Build_13000,
-			Build_13002,
-			Build_13201,
-			Build_16200,
-			Build_33114,
-			Build_14001,
+			zero_proto.Build_63000,
+			zero_proto.Build_63100,
+			zero_proto.Build_64000,
+			zero_proto.Build_13001,
+			zero_proto.Build_13000,
+			zero_proto.Build_13002,
+			zero_proto.Build_13201,
+			zero_proto.Build_16200,
+			zero_proto.Build_33114,
+			zero_proto.Build_14001,
 			Build_14101,
-			b.Build_15001, // inventory mb
-			Build_20001,
-			Build_20101,
-			Build_11210,
-			Build_20201,
-			Build_19001,
-			Build_12031,
-			Build_28000,
-			Build_30001,
-			Build_30101,
-			Build_50000,
-			Build_11200,
-			Build_11213,
-			Build_11300, // patch note
-			Build_11002,
+			b.Build_15001,
+			zero_proto.Build_20001,
+			zero_proto.Build_20101,
+			zero_proto.Build_11210,
+			zero_proto.Build_20201,
+			zero_proto.Build_19001,
+			zero_proto.Build_12031,
+			zero_proto.Build_28000,
+			zero_proto.Build_30001,
+			zero_proto.Build_30101,
+			zero_proto.Build_50000,
+			zero_proto.Build_11200,
+			zero_proto.Build_11213,
+			Build_11300,
+			zero_proto.Build_11002,
 		},
-
 		11017: {
-			Build_11018,
+			zero_proto.Build_11018,
 		},
 		11401: {
 			Build_11402,
@@ -78,91 +79,91 @@ func NewRegistry(b *Builder) {
 			Build_11702,
 		},
 		11705: {
-			Build_11706, // inst message
+			Build_11706,
 		},
 		11019: {
-			Build_11020,
+			zero_proto.Build_11020,
 		},
 		12002: {
 			Build_12003,
 		},
 		12022: {
-			Build_12023, // lock ship
+			Build_12023,
 		},
 		12043: {
-			Build_12044,
+			zero_proto.Build_12044,
 		},
 		12045: {
-			Build_12046,
+			zero_proto.Build_12046,
 		},
 		12025: {
 			b.Build_12026,
 		},
 		25026: {
-			Build_25027,
+			zero_proto.Build_25027,
 		},
 		34501: {
-			Build_34502,
+			zero_proto.Build_34502,
 		},
 		11202: {
-			Build_11203,
+			zero_proto.Build_11203,
 		},
 		23430: {
-			Build_23431,
+			zero_proto.Build_23431,
 		},
 		34001: {
-			Build_34002,
+			zero_proto.Build_34002,
 		},
 		18001: {
-			Build_18002,
+			zero_proto.Build_18002,
 		},
 		60037: {
-			Build_60000,
+			zero_proto.Build_60000,
 		},
 		62100: {
-			Build_62101,
+			zero_proto.Build_62101,
 		},
 		26101: {
-			Build_26102,
+			zero_proto.Build_26102,
 		},
 		11601: {
-			Build_11602,
+			zero_proto.Build_11602,
 		},
 		24020: {
-			Build_24021,
+			zero_proto.Build_24021,
 		},
 		27000: {
-			Build_27001,
+			zero_proto.Build_27001,
 		},
 		29001: {
-			Build_29002,
+			zero_proto.Build_29002,
 		},
 		11710: {
-			Build_11711,
+			zero_proto.Build_11711,
 		},
 		11603: {
-			Build_11604,
+			zero_proto.Build_11604,
 		},
 		60102: {
-			Build_60103,
+			zero_proto.Build_60103,
 		},
 		27010: {
-			Build_27011,
+			zero_proto.Build_27011,
 		},
 		12406: {
-			Build_12407, // here
+			zero_proto.Build_12407,
 		},
 		16104: {
-			Build_16105,
+			zero_proto.Build_16105,
 		},
 		13505: {
-			Build_13506,
+			zero_proto.Build_13506,
 		},
 		15008: {
-			Build_15009,
+			zero_proto.Build_15009,
 		},
 		11722: {
-			Build_11723,
+			zero_proto.Build_11723,
 		},
 	}
 }
