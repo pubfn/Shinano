@@ -8,6 +8,7 @@ import (
 	"google.golang.org/protobuf/proto"
 )
 
+// this looks like ping
 func Build_11020(msg *[]byte) ([]byte, int) {
 	sc_11018 := &protobuf.SC_11020{
 		Result: proto.Uint32(0),

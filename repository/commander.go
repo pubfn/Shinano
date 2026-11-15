@@ -3,7 +3,7 @@ package repository
 import (
 	"database/sql"
 
-	"Shinano/db"
+	"Shinano/cfg"
 )
 
 type Commander struct {
@@ -34,7 +34,51 @@ func CheckCommander(b *sql.DB, accountID int64) error {
 	}
 
 	if !exists {
-		err = db.NewCommader(int(accountID), b)
+		err = NewCommader(int(accountID), b)
 	}
 	return nil
+}
+
+func NewCommader(accId int, db *sql.DB) error {
+	tx, err := db.Begin()
+	if err != nil {
+		return err
+	}
+	defer tx.Rollback()
+
+	funcs := []func() error{
+		func() error {
+			_, err = tx.Exec("INSERT INTO commander (id, name, level, exp) VALUES (?, ?, ?, ?)", accId, "7sdu", 6, 0)
+			return err
+		},
+		func() error {
+			_, err = tx.Exec("INSERT INTO resourcelist (type, num) VALUES (?, ?)", 4, 5252)
+			return err
+		},
+		func() error {
+			_, err = tx.Exec("INSERT INTO resourcelist (type, num) VALUES (?, ?)", 1, 676767)
+			return err
+		},
+		func() error {
+			return AddShip(tx, 307084)
+		},
+		func() error {
+			_, err = tx.Exec("insert into inventory(id, count) values (?,?)", 20001, 6742)
+			return err
+		},
+		func() error {
+			for _, v := range cfg.SkillID[307084].ID {
+				_, err = tx.Exec("insert into skillidlist (skillid, skilllvl, skillexp, shipid) values (?,?,?,?)", v, 2, 50, 307084)
+			}
+			return err
+		},
+	}
+
+	for _, transaction := range funcs {
+		if err := transaction(); err != nil {
+			return err
+		}
+	}
+
+	return tx.Commit()
 }

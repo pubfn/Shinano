@@ -11,6 +11,7 @@ import (
 )
 
 func Build_12003(msg *[]byte) ([]byte, int) {
+	var i int
 	buildData := protobuf.CS_12002{}
 	curTime := time.Now().Unix()
 	if err := proto.Unmarshal(*msg, &buildData); err != nil {
@@ -23,16 +24,15 @@ func Build_12003(msg *[]byte) ([]byte, int) {
 	}
 
 	buildId := buildData.GetId()
+	fmt.Println("count ", buildData.GetCount())
 	for range buildData.GetCount() {
-
-		fmt.Println(buildData.GetId())
-		fmt.Println(buildData.GetCosttype())
+		fmt.Println("func raz skolko", i)
 		build := protobuf.BUILDINFO{
 			Time:       proto.Uint32(uint32(curTime)),
 			FinishTime: proto.Uint32(uint32(curTime + 3)),
 			BuildId:    &buildId,
 		}
-
+		i++
 		sc_12002.BuildInfo = append(sc_12002.BuildInfo, &build)
 	}
 

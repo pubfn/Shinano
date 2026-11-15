@@ -1,6 +1,7 @@
 package constructor
 
 import (
+	"fmt"
 	"log"
 
 	"Shinano/protobuf"
@@ -9,6 +10,7 @@ import (
 	"google.golang.org/protobuf/proto"
 )
 
+// gacha
 func (b *Builder) Build_12026(msg *[]byte) ([]byte, int) {
 	cs := &protobuf.CS_12025{}
 	proto.Unmarshal(*msg, cs)
@@ -16,7 +18,11 @@ func (b *Builder) Build_12026(msg *[]byte) ([]byte, int) {
 	shipList := []*protobuf.SHIPINFO{}
 
 	for _, v := range cs.GetPosList() {
-		shipId := repository.Casino(int(v))
+		fmt.Println("pos list", v)
+	}
+
+	for range cs.GetPosList() {
+		shipId := repository.Casino(int(cs.GetType()))
 		ship, err := repository.CreateShip(b.DB, shipId)
 		if err != nil {
 			log.Fatal(err)

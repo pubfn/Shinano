@@ -2,12 +2,16 @@ package repository
 
 import (
 	"database/sql"
-	"log"
+	"fmt"
 
 	"Shinano/protobuf"
 
 	"google.golang.org/protobuf/proto"
 )
+
+type DBExecutor interface {
+	Exec(query string, args ...any) (sql.Result, error)
+}
 
 var template = &protobuf.SHIPINFO{
 	EquipInfoList: []*protobuf.EQUIPSKIN_INFO{
@@ -30,7 +34,12 @@ var template = &protobuf.SHIPINFO{
 	SkinShadowList: []*protobuf.KVDATA{}, CharRandomFlag: []uint32{},
 }
 
-func AddShip(b *sql.DB, shipId int) error {
+func AddShip(b DBExecutor, shipId int) error {
+	fmt.Println("AddShip called with shipId:", shipId)
+
+	if shipId == 0 {
+		return fmt.Errorf("AddShip: shipId is zero")
+	}
 	_, err := b.Exec("insert into shiplist (templateId, level,exp,islocked,skinid) values (?,?,?,?,?)", shipId, 1, 0, 0, 0)
 	if err != nil {
 		return err
@@ -49,7 +58,7 @@ func CreateShip(b *sql.DB, shipId int) (*protobuf.SHIPINFO, error) {
 	}
 
 	ship.IsLocked, ship.TemplateId, ship.Level, ship.Exp, ship.SkinId, ship.Id =
-		proto.Uint32(0), proto.Uint32(uint32(shipId)), proto.Uint32(1), proto.Uint32(0), proto.Uint32(0), proto.Uint32(uint32(id))
+		proto.Uint32(0), proto.Uint32(uint32(shipId)), proto.Uint32(1), proto.Uint32(0), proto.Uint32(0), proto.Uint32(uint32(id+1))
 
 	return ship, nil
 }
@@ -98,7 +107,7 @@ func loadSkills(b *sql.DB, shipid uint32) ([]*protobuf.SHIPSKILL, error) {
 		var skillid, skilllvl, skillexp uint32
 
 		if err = skill.Scan(&skillid, &skilllvl, &skillexp); err != nil {
-			log.Fatal(err)
+			return nil, err
 		}
 
 		skillidlist = append(skillidlist, &protobuf.SHIPSKILL{SkillId: proto.Uint32(skillid), SkillLv: proto.Uint32(skilllvl), SkillExp: proto.Uint32(skillexp)})

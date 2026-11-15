@@ -8,6 +8,7 @@ import (
 	"google.golang.org/protobuf/proto"
 )
 
+// intresting
 func Build_12024(msg *[]byte) ([]byte, int) {
 	sc := &protobuf.SC_12024{
 		WorklistCount: proto.Uint32(10),
