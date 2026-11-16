@@ -85,13 +85,13 @@ func NewRegistry(b *Builder) {
 			zero_proto.Build_11020,
 		},
 		12002: {
-			Build_12003,
+			b.Build_12003,
 		},
 		12022: {
 			Build_12023,
 		},
 		12043: {
-			zero_proto.Build_12044,
+			b.Build_12044,
 		},
 		12045: {
 			zero_proto.Build_12046,

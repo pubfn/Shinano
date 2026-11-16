@@ -16,16 +16,17 @@ func (b *Builder) Build_12026(msg *[]byte) ([]byte, int) {
 
 	shipList := []*protobuf.SHIPINFO{}
 
-	for range cs.GetPosList() {
-		shipId := repository.Casino(int(cs.GetType()))
+	shipIds, err := repository.DrawBuild(b.DB, cs.GetPosList())
+	if err != nil {
+		log.Fatal("gacha claim 1", err)
+	}
+	for _, shipId := range shipIds {
 		ship, err := repository.CreateShip(b.DB, shipId)
 		if err != nil {
-			log.Fatal(err)
+			log.Fatal("gacha claim", err)
 		}
+
 		shipList = append(shipList, ship)
-		if err := repository.AddShip(b.DB, shipId); err != nil {
-			log.Fatal(err)
-		}
 	}
 
 	sc := &protobuf.SC_12026{

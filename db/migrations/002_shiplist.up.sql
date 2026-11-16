@@ -1,6 +1,6 @@
 CREATE TABLE shiplist(
     id INTEGER PRIMARY KEY,
-    templateId integer UNIQUE NOT NULL,
+    templateId integer NOT NULL,
     level integer  NOT NULL DEFAULT 1,
     exp integer NOT NULL,
     islocked integer NOT NULL,
@@ -15,5 +15,5 @@ CREATE TABLE skillidlist(
     shipid integer NOT NULL,
 
     FOREIGN KEY (shipid)
-        REFERENCES shiplist(templateid)
+        REFERENCES shiplist(id)
 );

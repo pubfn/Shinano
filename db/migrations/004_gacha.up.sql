@@ -1,5 +1,4 @@
 CREATE TABLE gacha (
-  id INTEGER NOT NULL,
-  type integer NOT NULL
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    shipid INTEGER NOT NULL
 );
-

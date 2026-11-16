@@ -2,7 +2,9 @@ package repository
 
 import (
 	"database/sql"
+	"time"
 
+	"Shinano/cfg"
 	"Shinano/protobuf"
 
 	"google.golang.org/protobuf/proto"
@@ -20,12 +22,12 @@ var template = &protobuf.SHIPINFO{
 		{Id: proto.Uint32(0), SkinId: proto.Uint32(0)},
 		{Id: proto.Uint32(0), SkinId: proto.Uint32(0)},
 	},
-	Energy:        proto.Uint32(146),
+	Energy:        proto.Uint32(150),
 	State:         proto.Uint32(0),
 	TransformList: []*protobuf.TRANSFORM_INFO{},
 	Intimacy:      proto.Uint32(9000), Proficiency: proto.Uint32(0),
 	StrengthList: []*protobuf.STRENGTH_INFO{},
-	CreateTime:   proto.Uint32(1790705327),
+	CreateTime:   proto.Uint32(uint32(time.Now().Unix())),
 	Propose:      proto.Uint32(1),
 	Name:         proto.String(""), ChangeNameTimestamp: proto.Uint32(0),
 	MaxLevel: proto.Uint32(100), CommonFlag: proto.Uint32(0),
@@ -34,9 +36,37 @@ var template = &protobuf.SHIPINFO{
 }
 
 func AddShip(b DBExecutor, shipId int) error {
-	_, err := b.Exec("insert into shiplist (templateId, level,exp,islocked,skinid) values (?,?,?,?,?)", shipId, 1, 0, 0, 0)
+	result, err := b.Exec("insert or ignore into shiplist (templateId, level,exp,islocked,skinid) values (?,?,?,?,?)", shipId, 1, 0, 0, 0)
 	if err != nil {
 		return err
+	}
+
+	rows, err := result.RowsAffected()
+	if err != nil {
+		return err
+	}
+
+	if rows == 0 {
+		return nil
+	}
+
+	id, err := result.LastInsertId()
+	if err != nil {
+		return err
+	}
+
+	if err := addSkills(b, shipId, int(id)); err != nil {
+		return err
+	}
+	return nil
+}
+
+func addSkills(b DBExecutor, shipId int, Id int) error {
+	for _, v := range cfg.SkillID[uint32(shipId)].ID {
+		_, err := b.Exec("insert into skillidlist (skillid, skilllvl, skillexp, shipid) values (?,?,?,?)", v, 1, 0, Id)
+		if err != nil {
+			return err
+		}
 	}
 	return nil
 }
@@ -45,15 +75,24 @@ func CreateShip(b *sql.DB, shipId int) (*protobuf.SHIPINFO, error) {
 	var id int
 	ship := proto.Clone(template).(*protobuf.SHIPINFO)
 
+	if err := AddShip(b, shipId); err != nil {
+		return nil, err
+	}
+
 	if err := b.QueryRow(`
     SELECT id FROM Shiplist ORDER BY id DESC LIMIT 1
     `).Scan(&id); err != nil {
 		return nil, err
 	}
 
-	ship.IsLocked, ship.TemplateId, ship.Level, ship.Exp, ship.SkinId, ship.Id =
-		proto.Uint32(0), proto.Uint32(uint32(shipId)), proto.Uint32(1), proto.Uint32(0), proto.Uint32(0), proto.Uint32(uint32(id+1))
+	skills, err := loadSkills(b, uint32(id))
+	if err != nil {
+		return nil, err
+	}
 
+	ship.IsLocked, ship.TemplateId, ship.Level, ship.Exp, ship.SkinId, ship.Id, ship.SkillIdList =
+		proto.Uint32(0), proto.Uint32(uint32(shipId)), proto.Uint32(1), proto.Uint32(0), proto.Uint32(0),
+		proto.Uint32(uint32(id)), skills
 	return ship, nil
 }
 
@@ -73,7 +112,7 @@ func LoadShips(b *sql.DB) ([]*protobuf.SHIPINFO, error) {
 			return nil, err
 		}
 
-		skillidlist, err := loadSkills(b, TemplateId)
+		skillidlist, err := loadSkills(b, Id)
 		if err != nil {
 			return nil, err
 		}
@@ -87,8 +126,8 @@ func LoadShips(b *sql.DB) ([]*protobuf.SHIPINFO, error) {
 	return shipList, nil
 }
 
-func loadSkills(b *sql.DB, shipid uint32) ([]*protobuf.SHIPSKILL, error) {
-	skill, err := b.Query("select skillid, skilllvl, skillexp from skillidlist where shipid = ?", shipid)
+func loadSkills(b *sql.DB, id uint32) ([]*protobuf.SHIPSKILL, error) {
+	skill, err := b.Query("select skillid, skilllvl, skillexp from skillidlist where shipid = ?", id)
 	if err != nil {
 		return nil, err
 	}

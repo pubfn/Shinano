@@ -2,8 +2,6 @@ package repository
 
 import (
 	"database/sql"
-
-	"Shinano/cfg"
 )
 
 type Commander struct {
@@ -64,12 +62,6 @@ func NewCommader(accId int, db *sql.DB) error {
 		},
 		func() error {
 			_, err = tx.Exec("insert into inventory(id, count) values (?,?)", 20001, 6742)
-			return err
-		},
-		func() error {
-			for _, v := range cfg.SkillID[307084].ID {
-				_, err = tx.Exec("insert into skillidlist (skillid, skilllvl, skillexp, shipid) values (?,?,?,?)", v, 2, 50, 307084)
-			}
 			return err
 		},
 	}

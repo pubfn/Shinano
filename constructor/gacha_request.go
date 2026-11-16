@@ -5,16 +5,17 @@ import (
 	"time"
 
 	"Shinano/protobuf"
+	"Shinano/repository"
 
 	"google.golang.org/protobuf/proto"
 )
 
-func Build_12003(msg *[]byte) ([]byte, int) {
+func (b *Builder) Build_12003(msg *[]byte) ([]byte, int) {
 	var i int
 	buildData := protobuf.CS_12002{}
 	curTime := time.Now().Unix()
 	if err := proto.Unmarshal(*msg, &buildData); err != nil {
-		log.Fatal(err)
+		log.Fatal("gacha req", err)
 	}
 
 	sc_12002 := &protobuf.SC_12003{
@@ -31,6 +32,13 @@ func Build_12003(msg *[]byte) ([]byte, int) {
 		}
 		i++
 		sc_12002.BuildInfo = append(sc_12002.BuildInfo, &build)
+	}
+
+	for range buildData.GetCount() {
+		shipId := repository.Casino(int(buildData.GetId()))
+		if err := repository.AddBuild(b.DB, shipId); err != nil {
+			log.Fatal(err)
+		}
 	}
 
 	data, err := proto.Marshal(sc_12002)
