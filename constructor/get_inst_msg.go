@@ -4,6 +4,7 @@ import (
 	"log"
 
 	"Shinano/protobuf"
+	"Shinano/repository"
 
 	"google.golang.org/protobuf/proto"
 )
@@ -15,7 +16,7 @@ func Build_11702(msg *[]byte) ([]byte, int) {
 		log.Fatal(err)
 	}
 
-	instMsg := parseId(id.GetId())
+	instMsg := repository.ParseId(id.GetId())
 
 	sc_11604 := &protobuf.SC_11702{
 		Result: proto.Uint32(0),
