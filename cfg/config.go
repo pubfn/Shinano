@@ -13,6 +13,10 @@ type group struct {
 	Id []int `json:"id"`
 }
 
+type skin struct {
+	Id int `json:"id"`
+}
+
 type instMsg struct {
 	Text    string         `json:"text"`
 	Discuss map[uint32]msg `json:"discuss"`
@@ -35,11 +39,14 @@ var SkillID = map[uint32]buffList{}
 
 var GachaPool = gachaPool{}
 
+var SkinPool = map[uint32]skin{}
+
 func LoadGameData() error {
 	funcs := []func() error{
 		loadskillid,
 		loadInstData,
 		loadGachaPool,
+		loadSkinPool,
 	}
 
 	for _, action := range funcs {
@@ -48,6 +55,15 @@ func LoadGameData() error {
 		}
 	}
 	return nil
+}
+
+func loadSkinPool() error {
+	tmp, err := os.ReadFile("cfg/ship_skin_template.json")
+	if err != nil {
+		return err
+	}
+
+	return json.Unmarshal(tmp, &SkinPool)
 }
 
 func loadGachaPool() error {

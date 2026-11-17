@@ -1,20 +1,25 @@
 package constructor
 
 import (
-	"fmt"
 	"log"
 
+	"Shinano/cfg"
 	"Shinano/protobuf"
+	"Shinano/repository"
 
 	"google.golang.org/protobuf/proto"
 )
 
-func Build_16002(msg *[]byte) ([]byte, int) {
+func (b *Builder) Build_16002(msg *[]byte) ([]byte, int) {
 	cs := &protobuf.CS_16001{}
 
 	proto.Unmarshal(*msg, cs)
 
-	fmt.Println(cs.GetId())
+	skinID := cfg.SkinPool[cs.GetId()].Id
+
+	if err := repository.BuySkin(b.DB, skinID); err != nil {
+		log.Fatal(err)
+	}
 
 	sc := &protobuf.SC_16002{
 		Result:   proto.Uint32(0),
