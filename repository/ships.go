@@ -96,6 +96,22 @@ func CreateShip(b *sql.DB, shipId int) (*protobuf.SHIPINFO, error) {
 	return ship, nil
 }
 
+func LockShip(b *sql.DB, id uint32, IsLocked int) error {
+	_, err := b.Exec("update shiplist set islocked = ? where id = ?", IsLocked, id)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func ApplySkin(b *sql.DB, id int, skinId int) error {
+	_, err := b.Exec("update shiplist set skinid = ? where id = ?", skinId, id)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 func LoadShips(b *sql.DB) ([]*protobuf.SHIPINFO, error) {
 	ship, err := b.Query("select * from Shiplist")
 	if err != nil {

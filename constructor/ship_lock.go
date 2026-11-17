@@ -4,11 +4,26 @@ import (
 	"log"
 
 	"Shinano/protobuf"
+	"Shinano/repository"
 
 	"google.golang.org/protobuf/proto"
 )
 
-func Build_12023(msg *[]byte) ([]byte, int) {
+func (b *Builder) Build_12023(msg *[]byte) ([]byte, int) {
+	cs := &protobuf.CS_12022{}
+
+	if err := proto.Unmarshal(*msg, cs); err != nil {
+		log.Fatal(err)
+	}
+
+	isLocked := cs.GetIsLocked()
+
+	for _, v := range cs.GetShipIdList() {
+		if err := repository.LockShip(b.DB, v, int(isLocked)); err != nil {
+			log.Fatal(err)
+		}
+	}
+
 	sc := &protobuf.SC_12023{
 		Result: proto.Uint32(0),
 	}

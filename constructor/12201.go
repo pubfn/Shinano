@@ -10,7 +10,12 @@ import (
 
 func Build_12201(msg *[]byte) ([]byte, int) {
 	sc := &protobuf.SC_12201{
-		SkinList:          []*protobuf.IDTIMEINFO{},
+		SkinList: []*protobuf.IDTIMEINFO{
+			{
+				Id:   proto.Uint32(307081),
+				Time: proto.Uint32(0),
+			},
+		},
 		ForbiddenSkinList: []uint32{},
 		ForbiddenSkinType: []uint32{},
 		ForbiddenList:     []*protobuf.SKIN_FORBIDDEN{},
