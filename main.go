@@ -15,7 +15,7 @@ import (
 )
 
 func main() {
-	l, err := net.Listen("tcp", ":8080")
+	l, err := net.Listen("tcp", "127.0.0.1:8080")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -46,9 +46,20 @@ func conn(c net.Conn) {
 			log.Println("error:", err)
 			return
 		}
+
 		data := make([]byte, int(binary.BigEndian.Uint16(len[0:2]))+2)
-		_, _ = io.ReadFull(reader, data)
-		msg := packets.ReadPacket(data)
+		_, err = io.ReadFull(reader, data)
+		if err != nil {
+			log.Println("error:", err)
+			return
+		}
+
+		msg, err := packets.ReadPacket(data)
+		if err != nil {
+			log.Println("error:", err)
+			return
+		}
+
 		fmt.Println("Message Id", msg.Id)
 		packets.Hande(msg.Id, &msg.Message, c, msg.Index)
 	}
