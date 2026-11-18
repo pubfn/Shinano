@@ -40,7 +40,7 @@ func NewRegistry(b *Builder) {
 			zero_proto.Build_22300,
 			Build_12024,
 			b.Build_12001,
-			zero_proto.Build_12101,
+			b.Build_12101,
 			b.Build_12201,
 			zero_proto.Build_63000,
 			zero_proto.Build_63100,
@@ -52,7 +52,7 @@ func NewRegistry(b *Builder) {
 			zero_proto.Build_16200,
 			zero_proto.Build_33114,
 			zero_proto.Build_14001,
-			Build_14101,
+			zero_proto.Build_14101,
 			b.Build_15001,
 			zero_proto.Build_20001,
 			zero_proto.Build_20101,
@@ -156,6 +156,9 @@ func NewRegistry(b *Builder) {
 		12406: {
 			zero_proto.Build_12407,
 		},
+		12102: {
+			b.Build_12103,
+		},
 		16104: {
 			zero_proto.Build_16105,
 		},
@@ -173,6 +176,9 @@ func NewRegistry(b *Builder) {
 		},
 		11722: {
 			zero_proto.Build_11723,
+		},
+		13107: {
+			Build_13108,
 		},
 	}
 }

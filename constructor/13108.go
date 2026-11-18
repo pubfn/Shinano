@@ -1,4 +1,4 @@
-package zero_proto
+package constructor
 
 import (
 	"log"
@@ -8,9 +8,9 @@ import (
 	"google.golang.org/protobuf/proto"
 )
 
-func Build_12101(msg *[]byte) ([]byte, int) {
-	sc := &protobuf.SC_12101{
-		GroupList: []*protobuf.GROUPINFO_P12{},
+func Build_13108(msg *[]byte) ([]byte, int) {
+	sc := &protobuf.SC_13108{
+		Result: proto.Uint32(0),
 	}
 
 	data, err := proto.Marshal(sc)
@@ -18,5 +18,5 @@ func Build_12101(msg *[]byte) ([]byte, int) {
 		log.Fatal(err)
 	}
 
-	return data, 12101
+	return data, 13108
 }
