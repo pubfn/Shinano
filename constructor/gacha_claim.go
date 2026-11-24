@@ -4,24 +4,25 @@ import (
 	"log"
 
 	"Shinano/protobuf"
-	"Shinano/repository"
+	"Shinano/repository/gacha"
+	"Shinano/repository/ship"
 
 	"google.golang.org/protobuf/proto"
 )
 
-// gacha
 func (b *Builder) Build_12026(msg *[]byte) ([]byte, int) {
 	cs := &protobuf.CS_12025{}
 	proto.Unmarshal(*msg, cs)
 
 	shipList := []*protobuf.SHIPINFO{}
 
-	shipIds, err := repository.DrawBuild(b.DB, cs.GetPosList())
+	shipIds, err := gacha.DrawBuild(b.DB, cs.GetPosList())
 	if err != nil {
 		log.Fatal("gacha claim 1", err)
 	}
+
 	for _, shipId := range shipIds {
-		ship, err := repository.CreateShip(b.DB, shipId)
+		ship, err := ship.CreateShip(b.DB, shipId)
 		if err != nil {
 			log.Fatal("gacha claim", err)
 		}

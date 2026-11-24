@@ -4,7 +4,7 @@ import (
 	"log"
 
 	"Shinano/protobuf"
-	"Shinano/repository"
+	"Shinano/repository/ship"
 
 	"google.golang.org/protobuf/proto"
 )
@@ -12,7 +12,7 @@ import (
 func (b *Builder) Build_12201(msg *[]byte) ([]byte, int) {
 	skinList := []*protobuf.IDTIMEINFO{}
 
-	skinsIds, err := repository.GetAllSkins(b.DB)
+	skinsIds, err := ship.GetAllSkins(b.DB)
 	if err != nil {
 		log.Fatal(err)
 	}

@@ -4,7 +4,7 @@ import (
 	"log"
 
 	"Shinano/protobuf"
-	"Shinano/repository"
+	"Shinano/repository/insta"
 
 	"google.golang.org/protobuf/proto"
 )
@@ -16,7 +16,7 @@ func Build_11702(msg *[]byte) ([]byte, int) {
 		log.Fatal(err)
 	}
 
-	instMsg := repository.ParseId(id.GetId())
+	instMsg := insta.ParseId(id.GetId())
 
 	sc_11604 := &protobuf.SC_11702{
 		Result: proto.Uint32(0),

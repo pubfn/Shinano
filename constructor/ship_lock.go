@@ -4,7 +4,7 @@ import (
 	"log"
 
 	"Shinano/protobuf"
-	"Shinano/repository"
+	"Shinano/repository/ship"
 
 	"google.golang.org/protobuf/proto"
 )
@@ -19,7 +19,7 @@ func (b *Builder) Build_12023(msg *[]byte) ([]byte, int) {
 	isLocked := cs.GetIsLocked()
 
 	for _, v := range cs.GetShipIdList() {
-		if err := repository.LockShip(b.DB, v, int(isLocked)); err != nil {
+		if err := ship.LockShip(b.DB, v, int(isLocked)); err != nil {
 			log.Fatal(err)
 		}
 	}

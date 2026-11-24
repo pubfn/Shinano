@@ -4,7 +4,7 @@ import (
 	"log"
 
 	"Shinano/protobuf"
-	"Shinano/repository"
+	"Shinano/repository/ship"
 
 	"google.golang.org/protobuf/proto"
 )
@@ -16,7 +16,7 @@ func (b *Builder) Build_12203(msg *[]byte) ([]byte, int) {
 		log.Fatal(err)
 	}
 
-	if err := repository.ApplySkin(b.DB, int(cs.GetShipId()), int(cs.GetSkinId())); err != nil {
+	if err := ship.ApplySkin(b.DB, int(cs.GetShipId()), int(cs.GetSkinId())); err != nil {
 		log.Fatal(err)
 	}
 

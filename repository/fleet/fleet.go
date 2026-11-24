@@ -1,4 +1,4 @@
-package repository
+package fleet
 
 import (
 	"database/sql"

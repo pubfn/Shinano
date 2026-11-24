@@ -1,4 +1,4 @@
-package constructor
+package zero_proto
 
 import (
 	"log"

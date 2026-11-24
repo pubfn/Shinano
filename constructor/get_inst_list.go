@@ -4,7 +4,7 @@ import (
 	"log"
 
 	"Shinano/protobuf"
-	"Shinano/repository"
+	"Shinano/repository/insta"
 
 	"google.golang.org/protobuf/proto"
 )
@@ -19,8 +19,8 @@ func Build_11706(msg *[]byte) ([]byte, int) {
 	}
 
 	for _, idlist := range ids.GetIdList() {
-		if instMsg := repository.ParseId(idlist); instMsg != nil {
-			sc_11604.InsMessageList = append(sc_11604.InsMessageList, repository.ParseId(idlist))
+		if instMsg := insta.ParseId(idlist); instMsg != nil {
+			sc_11604.InsMessageList = append(sc_11604.InsMessageList, insta.ParseId(idlist))
 		}
 	}
 

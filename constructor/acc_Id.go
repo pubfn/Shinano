@@ -4,7 +4,7 @@ import (
 	"log"
 
 	"Shinano/protobuf"
-	"Shinano/repository"
+	"Shinano/repository/commander"
 
 	"google.golang.org/protobuf/proto"
 )
@@ -19,7 +19,7 @@ func (b *Builder) Build_10023(msg *[]byte) ([]byte, int) {
 
 	accountID := int64(fields.GetAccountId())
 
-	if err = repository.CheckCommander(b.DB, accountID); err != nil {
+	if err = commander.CheckCommander(b.DB, accountID); err != nil {
 		log.Fatal(err)
 	}
 

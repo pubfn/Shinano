@@ -1,4 +1,4 @@
-package repository
+package insta
 
 import (
 	"Shinano/cfg"

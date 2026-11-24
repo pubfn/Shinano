@@ -5,7 +5,7 @@ import (
 	"time"
 
 	"Shinano/protobuf"
-	"Shinano/repository"
+	"Shinano/repository/gacha"
 
 	"google.golang.org/protobuf/proto"
 )
@@ -35,8 +35,8 @@ func (b *Builder) Build_12003(msg *[]byte) ([]byte, int) {
 	}
 
 	for range buildData.GetCount() {
-		shipId := repository.Casino(int(buildData.GetId()))
-		if err := repository.AddBuild(b.DB, shipId); err != nil {
+		shipId := gacha.Casino(int(buildData.GetId()))
+		if err := gacha.AddBuild(b.DB, shipId); err != nil {
 			log.Fatal(err)
 		}
 	}

@@ -4,13 +4,13 @@ import (
 	"log"
 
 	"Shinano/protobuf"
-	"Shinano/repository"
+	"Shinano/repository/ship"
 
 	"google.golang.org/protobuf/proto"
 )
 
 func (b *Builder) Build_12001(msg *[]byte) ([]byte, int) {
-	ships, err := repository.LoadShips(b.DB)
+	ships, err := ship.LoadShips(b.DB)
 	if err != nil {
 		log.Fatal(err)
 	}

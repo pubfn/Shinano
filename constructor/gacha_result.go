@@ -4,7 +4,7 @@ import (
 	"log"
 
 	"Shinano/protobuf"
-	"Shinano/repository"
+	"Shinano/repository/gacha"
 
 	"google.golang.org/protobuf/proto"
 )
@@ -12,7 +12,7 @@ import (
 func (b *Builder) Build_12044(msg *[]byte) ([]byte, int) {
 	infoList := []*protobuf.BUILD_INFO{}
 
-	buildInfo, err := repository.GetBuildInfo(b.DB)
+	buildInfo, err := gacha.GetBuildInfo(b.DB)
 	if err != nil {
 		log.Fatal("gacha result", err)
 	}

@@ -45,7 +45,7 @@ func NewRegistry(b *Builder) {
 			zero_proto.Build_63000,
 			zero_proto.Build_63100,
 			zero_proto.Build_64000,
-			zero_proto.Build_13001,
+			b.Build_13001,
 			zero_proto.Build_13000,
 			zero_proto.Build_13002,
 			zero_proto.Build_13201,
@@ -71,6 +71,9 @@ func NewRegistry(b *Builder) {
 		},
 		11017: {
 			zero_proto.Build_11018,
+		},
+		13101: {
+			Build_13102,
 		},
 		11401: {
 			Build_11402,
@@ -178,7 +181,10 @@ func NewRegistry(b *Builder) {
 			zero_proto.Build_11723,
 		},
 		13107: {
-			Build_13108,
+			zero_proto.Build_13108,
+		},
+		13103: {
+			Build_13104,
 		},
 	}
 }

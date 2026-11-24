@@ -1,7 +1,9 @@
-package repository
+package commander
 
 import (
 	"database/sql"
+
+	"Shinano/repository/ship"
 )
 
 type Commander struct {
@@ -50,7 +52,7 @@ func NewCommader(accId int, db *sql.DB) error {
 			return err
 		},
 		func() error {
-			_, err = tx.Exec("INSERT INTO resourcelist (type, num) VALUES (?, ?)", 4, 5252)
+			_, err = tx.Exec("INSERT INTO resourcelist (type, num) VALUES (?, ?)", 4, 525252)
 			return err
 		},
 		func() error {
@@ -58,7 +60,11 @@ func NewCommader(accId int, db *sql.DB) error {
 			return err
 		},
 		func() error {
-			return AddShip(tx, 307084)
+			_, err = tx.Exec("INSERT INTO resourcelist (type, num) VALUES (?, ?)", 2, 424242)
+			return err
+		},
+		func() error {
+			return ship.AddShip(tx, 307084)
 		},
 		func() error {
 			_, err = tx.Exec("insert into inventory(id, count) values (?,?)", 20001, 6742)

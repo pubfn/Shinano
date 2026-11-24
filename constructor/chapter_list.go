@@ -1,24 +1,30 @@
-package zero_proto
+package constructor
 
 import (
 	"log"
 
 	"Shinano/protobuf"
+	"Shinano/repository/story"
 
 	"google.golang.org/protobuf/proto"
 )
 
-func Build_13001(msg *[]byte) ([]byte, int) {
+func (b *Builder) Build_13001(msg *[]byte) ([]byte, int) {
+	chapterList, err := story.GetChapterList(b.DB)
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	sc := &protobuf.SC_13001{
-		ChapterList: []*protobuf.CHAPTERINFO{},
+		ChapterList: chapterList,
 		ReactChapter: &protobuf.REACTCHAPTER_INFO{
-			Count:           proto.Uint32(3),
+			Count:           proto.Uint32(0),
 			ActiveTimestamp: proto.Uint32(0),
 			ActiveId:        proto.Uint32(0),
 			DailyCount:      proto.Uint32(0),
 		},
 		FleetList:    []*protobuf.FLEET_INFO{},
-		Oil:          proto.Uint32(1),
+		Oil:          proto.Uint32(0),
 		TimeAcc:      proto.Uint32(0),
 		ExtraTimeMax: proto.Uint32(0),
 	}

@@ -4,18 +4,19 @@ import (
 	"log"
 
 	"Shinano/protobuf"
-	"Shinano/repository"
+	"Shinano/repository/commander"
+	"Shinano/repository/inventory"
 
 	"google.golang.org/protobuf/proto"
 )
 
 func (b *Builder) Build_11003(msg *[]byte) ([]byte, int) {
-	commander, err := repository.GetCommanderData(b.DB)
+	commander, err := commander.GetCommanderData(b.DB)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	ResourceList, err := repository.GetResources(b.DB)
+	ResourceList, err := inventory.GetResources(b.DB)
 	if err != nil {
 		log.Fatal(err)
 	}

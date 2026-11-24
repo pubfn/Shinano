@@ -5,7 +5,7 @@ import (
 
 	"Shinano/cfg"
 	"Shinano/protobuf"
-	"Shinano/repository"
+	"Shinano/repository/ship"
 
 	"google.golang.org/protobuf/proto"
 )
@@ -17,7 +17,7 @@ func (b *Builder) Build_16002(msg *[]byte) ([]byte, int) {
 
 	skinID := cfg.SkinPool[cs.GetId()].Id
 
-	if err := repository.BuySkin(b.DB, skinID); err != nil {
+	if err := ship.BuySkin(b.DB, skinID); err != nil {
 		log.Fatal(err)
 	}
 

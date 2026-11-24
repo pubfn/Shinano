@@ -4,7 +4,7 @@ import (
 	"log"
 
 	"Shinano/protobuf"
-	"Shinano/repository"
+	"Shinano/repository/fleet"
 
 	"google.golang.org/protobuf/proto"
 )
@@ -16,7 +16,7 @@ func (b *Builder) Build_12103(msg *[]byte) ([]byte, int) {
 		log.Fatal(err)
 	}
 
-	err := repository.UpdateFleet(b.DB, int(cs.GetId()), cs.GetShipList())
+	err := fleet.UpdateFleet(b.DB, int(cs.GetId()), cs.GetShipList())
 	if err != nil {
 		log.Fatal(err)
 	}
