@@ -66,11 +66,11 @@ func (g *Grid) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("invalid len", len(raw))
 	}
 
-	if err := json.Unmarshal(raw[0], &g.X); err != nil {
+	if err := json.Unmarshal(raw[0], &g.Y); err != nil {
 		return err
 	}
 
-	if err := json.Unmarshal(raw[1], &g.Y); err != nil {
+	if err := json.Unmarshal(raw[1], &g.X); err != nil {
 		return err
 	}
 

@@ -186,5 +186,11 @@ func NewRegistry(b *Builder) {
 		13103: {
 			Build_13104,
 		},
+		40001: {
+			Build_40002,
+		},
+		40003: {
+			Build_40004,
+		},
 	}
 }

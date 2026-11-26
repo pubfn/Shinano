@@ -9,17 +9,22 @@ import (
 	"google.golang.org/protobuf/proto"
 )
 
-func getCellFlag(bossPos []int) *protobuf.CELLFLAG {
+type point struct {
+	y int
+	x int
+}
+
+func getCellFlag(bossPos point) *protobuf.CELLFLAG {
 	return &protobuf.CELLFLAG{
 		Pos: &protobuf.CHAPTERCELLPOS_P13{
-			Row:    proto.Uint32(uint32(bossPos[0])),
-			Column: proto.Uint32(uint32(bossPos[1])),
+			Row:    proto.Uint32(uint32(bossPos.y)),
+			Column: proto.Uint32(uint32(bossPos.x)),
 		},
 		FlagList: []uint32{1},
 	}
 }
 
-func getMainGroupList(startPost []int, shipId []uint32, fleetId uint32) *protobuf.GROUPINCHAPTER_P13 {
+func getMainGroupList(startPost point, shipId []uint32, fleetId uint32) *protobuf.GROUPINCHAPTER_P13 {
 	shipList := []*protobuf.SHIPINCHAPTER_P13{}
 
 	for _, id := range shipId {
@@ -35,8 +40,8 @@ func getMainGroupList(startPost []int, shipId []uint32, fleetId uint32) *protobu
 		Id:       &fleetId,
 		ShipList: shipList,
 		Pos: &protobuf.CHAPTERCELLPOS_P13{
-			Row:    proto.Uint32(uint32(startPost[0])),
-			Column: proto.Uint32(uint32(startPost[1])),
+			Row:    proto.Uint32(uint32(startPost.y)),
+			Column: proto.Uint32(uint32(startPost.x)),
 		},
 		StepCount:        proto.Uint32(0),
 		BoxStrategyList:  []*protobuf.STRATEGYINFO_P13{},
@@ -55,10 +60,10 @@ func getMainGroupList(startPost []int, shipId []uint32, fleetId uint32) *protobu
 	}
 }
 
-func fetchCellList(id uint32) ([]*protobuf.CHAPTERCELLINFO_P13, []int, []int) {
+func fetchCellList(id uint32) ([]*protobuf.CHAPTERCELLINFO_P13, point, point) {
 	cellList := []*protobuf.CHAPTERCELLINFO_P13{}
-	shipSpawn := []int{}
-	flagPos := []int{}
+	shipSpawn := point{}
+	flagPos := point{}
 
 	for _, cell := range cfg.ChapterData[id].Grid {
 		if !cell.Active {
@@ -67,8 +72,8 @@ func fetchCellList(id uint32) ([]*protobuf.CHAPTERCELLINFO_P13, []int, []int) {
 
 		buf := &protobuf.CHAPTERCELLINFO_P13{
 			Pos: &protobuf.CHAPTERCELLPOS_P13{
-				Row:    proto.Uint32(uint32(cell.X)),
-				Column: proto.Uint32(uint32(cell.Y)),
+				Row:    proto.Uint32(uint32(cell.Y)),
+				Column: proto.Uint32(uint32(cell.X)),
 			},
 			ItemId:   proto.Uint32(0),
 			ItemFlag: proto.Uint32(0),
@@ -78,11 +83,17 @@ func fetchCellList(id uint32) ([]*protobuf.CHAPTERCELLINFO_P13, []int, []int) {
 
 		switch cell.GridType {
 		case 1:
-			shipSpawn = append(shipSpawn, cell.X, cell.Y)
+			shipSpawn = point{
+				x: cell.X,
+				y: cell.Y,
+			}
 			buf.ItemType = proto.Uint32(0)
 
 		case 8:
-			flagPos = append(flagPos, cell.X, cell.Y)
+			flagPos = point{
+				x: cell.X,
+				y: cell.Y,
+			}
 			buf.ItemType = proto.Uint32(0)
 
 		case 6:

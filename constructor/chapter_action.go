@@ -14,7 +14,7 @@ func Build_13104(msg *[]byte) ([]byte, int) {
 
 	proto.Unmarshal(*msg, cs)
 
-	movePath := story.StoryAct(cs.GetAct())
+	movePath := story.StoryAct(cs.GetAct(), cs.GetActArg_1(), cs.GetActArg_2())
 
 	sc := &protobuf.SC_13104{
 		Result:           proto.Uint32(0),
