@@ -4,6 +4,7 @@ import (
 	"database/sql"
 
 	"Shinano/constructor/zero_proto"
+	"Shinano/repository/story"
 )
 
 type Handler func(data *[]byte) ([]byte, int)
@@ -11,12 +12,14 @@ type Handler func(data *[]byte) ([]byte, int)
 var Registry map[int][]Handler
 
 type Builder struct {
-	DB *sql.DB
+	DB      *sql.DB
+	Chapter *story.Chapter
 }
 
-func NewBuilder(db *sql.DB) *Builder {
+func NewBuilder(db *sql.DB, c *story.Chapter) *Builder {
 	return &Builder{
-		DB: db,
+		DB:      db,
+		Chapter: c,
 	}
 }
 
@@ -73,7 +76,7 @@ func NewRegistry(b *Builder) {
 			zero_proto.Build_11018,
 		},
 		13101: {
-			Build_13102,
+			b.Build_13102,
 		},
 		11401: {
 			Build_11402,
@@ -184,7 +187,7 @@ func NewRegistry(b *Builder) {
 			zero_proto.Build_13108,
 		},
 		13103: {
-			Build_13104,
+			b.Build_13104,
 		},
 		40001: {
 			Build_40002,

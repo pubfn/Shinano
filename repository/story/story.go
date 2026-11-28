@@ -2,7 +2,6 @@ package story
 
 import (
 	"database/sql"
-	"fmt"
 	"time"
 
 	"Shinano/protobuf"
@@ -46,56 +45,56 @@ func GetChapterList(b *sql.DB) ([]*protobuf.CHAPTERINFO, error) {
 func GetChapterInfo(id int) {
 }
 
-func StoryAct(actId uint32, y uint32, x uint32) []*protobuf.CHAPTERCELLPOS_P13 {
+func InitChapter(id uint32) *Chapter {
+	var chap Chapter
+
+	chap.initMap(id)
+	chap.initEntities()
+	chap.mapUpdate()
+
+	return &chap
+}
+
+func (s *Chapter) StoryAct(actId uint32, y uint32, x uint32) []*protobuf.CHAPTERCELLPOS_P13 {
 	movePath := []*protobuf.CHAPTERCELLPOS_P13{}
-	fmt.Println(actId)
+
 	switch actId {
 	case 1:
 		{
-			path := bfs(point{
-				x: int(x) - xOffset,
-
-				y: int(y) - yOffset,
+			path := s.bfs(point{
+				x: int(x) - s.Offset.x,
+				y: int(y) - s.Offset.y,
 			})
+
 			if len(path) == 0 {
-				fmt.Println("len is 0")
 				return movePath
 			}
 
 			for _, p := range path {
 				buf := &protobuf.CHAPTERCELLPOS_P13{
-					Row:    proto.Uint32(uint32(p.y + yOffset)),
-					Column: proto.Uint32(uint32(p.x + xOffset)),
+					Row:    proto.Uint32(uint32(p.y + s.Offset.y)),
+					Column: proto.Uint32(uint32(p.x + s.Offset.x)),
 				}
-				fmt.Println("x:", p.x+xOffset)
-				fmt.Println("y:", p.y+yOffset)
-				fmt.Println()
+
 				movePath = append(movePath, buf)
 			}
 
-			playerPos = path[len(path)-1]
+			s.Player = path[len(path)-1]
 		}
 	}
 
 	return movePath
 }
 
-func StartChapter(id uint32, shipId []uint32, fleetId *uint32) *protobuf.CURRENTCHAPTERINFO {
-	cellList, startPos, bossPos := fetchCellList(id)
+func (c *Chapter) StartChapter(shipId []uint32, fleetId *uint32) *protobuf.CURRENTCHAPTERINFO {
+	mainGroup := c.getMainGroupList(shipId, *fleetId)
+	bossLi := c.getBossList()
 
-	initMap(id)
-
-	playerPos = point{x: startPos.x - xOffset, y: startPos.y - yOffset}
-
-	mainGroup := getMainGroupList(startPos, shipId, *fleetId)
-
-	cellFlag := getCellFlag(bossPos)
-
-	chapterInfo := &protobuf.CURRENTCHAPTERINFO{
-		Id:                  &id,
-		CellList:            cellList,
+	return &protobuf.CURRENTCHAPTERINFO{
+		Id:                  &c.Id,
+		CellList:            c.getCellList(),
 		MainGroupList:       []*protobuf.GROUPINCHAPTER_P13{mainGroup},
-		CellFlagList:        []*protobuf.CELLFLAG{cellFlag},
+		CellFlagList:        bossLi,
 		ChapterStrategyList: []*protobuf.STRATEGYINFO_P13{},
 		FleetDuties: []*protobuf.FLEETDUTYKEYVALUEPAIR{
 			{
@@ -123,6 +122,4 @@ func StartChapter(id uint32, shipId []uint32, fleetId *uint32) *protobuf.CURRENT
 		SubmarineGroupList:    []*protobuf.GROUPINCHAPTER_P13{},
 		SupportGroupList:      []*protobuf.GROUPINCHAPTER_P13{},
 	}
-
-	return chapterInfo
 }

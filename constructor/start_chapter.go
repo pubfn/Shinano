@@ -9,16 +9,17 @@ import (
 	"google.golang.org/protobuf/proto"
 )
 
-func Build_13102(msg *[]byte) ([]byte, int) {
+func (b *Builder) Build_13102(msg *[]byte) ([]byte, int) {
 	cs := &protobuf.CS_13101{}
-
 	if err := proto.Unmarshal(*msg, cs); err != nil {
 		log.Fatal(err)
 	}
 
 	team := cs.GetFleet().MainTeam
+	id := cs.GetId()
+	b.Chapter = story.InitChapter(id)
 
-	curChapter := story.StartChapter(cs.GetId(), team[0].ShipList, team[0].Id)
+	curChapter := b.Chapter.StartChapter(team[0].ShipList, team[0].Id)
 
 	sc := &protobuf.SC_13102{
 		Result:         proto.Uint32(0),

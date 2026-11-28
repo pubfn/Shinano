@@ -4,26 +4,19 @@ import (
 	"slices"
 )
 
-type cell int
-
-const (
-	empty cell = iota
-	wall
-	hostile
-)
-
-func bfs(finish point) []point {
+func (s *Chapter) bfs(finish point) []point {
 	dx := []int{0, 0, -1, 1}
 	dy := []int{-1, 1, 0, 0}
 
-	y := len(gameMap)
-	x := len(gameMap[0])
+	y := len(s.Map)
+	x := len(s.Map[0])
 	visited := makeArr[bool](y, x)
 	parent := makeArr[point](y, x)
+
 	queue := []point{}
 
-	queue = append(queue, playerPos)
-	visited[playerPos.y][playerPos.x] = true
+	queue = append(queue, s.Player)
+	visited[s.Player.y][s.Player.x] = true
 
 	found := false
 
@@ -41,17 +34,7 @@ func bfs(finish point) []point {
 			nx := current.x + dx[i]
 			ny := current.y + dy[i]
 
-			if nx < 0 || ny < 0 ||
-				nx >= x || ny >= y {
-				continue
-			}
-
-			if gameMap[ny][nx] == wall {
-				continue
-			}
-
-			if gameMap[ny][nx] == hostile &&
-				!(nx == finish.x && ny == finish.y) {
+			if s.isBlocked(ny, nx, x, y, finish) {
 				continue
 			}
 
@@ -74,17 +57,35 @@ func bfs(finish point) []point {
 	path := []point{}
 	cur := finish
 
-	for !(cur.x == playerPos.x && cur.y == playerPos.y) {
+	for !(cur.x == s.Player.x && cur.y == s.Player.y) {
 		path = append(path, cur)
 
 		cur = parent[cur.y][cur.x]
 	}
 
-	path = append(path, playerPos)
-
 	slices.Reverse(path)
 
-	return path[1:]
+	return path
+}
+
+func (s *Chapter) isBlocked(ny, nx, x, y int, finish point) bool {
+	if nx < 0 || ny < 0 ||
+		nx >= x || ny >= y {
+		return true
+	}
+
+	if s.Map[ny][nx] == wall {
+		return true
+	}
+
+	for _, e := range s.Enemies {
+		if e.Pos.x == nx && e.Pos.y == ny &&
+			!(nx == finish.x && ny == finish.y) {
+			return true
+		}
+	}
+
+	return false
 }
 
 func makeArr[T any](height int, width int) [][]T {

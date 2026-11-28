@@ -4,17 +4,16 @@ import (
 	"log"
 
 	"Shinano/protobuf"
-	"Shinano/repository/story"
 
 	"google.golang.org/protobuf/proto"
 )
 
-func Build_13104(msg *[]byte) ([]byte, int) {
+func (b *Builder) Build_13104(msg *[]byte) ([]byte, int) {
 	cs := &protobuf.CS_13103{}
 
 	proto.Unmarshal(*msg, cs)
 
-	movePath := story.StoryAct(cs.GetAct(), cs.GetActArg_1(), cs.GetActArg_2())
+	movePath := b.Chapter.StoryAct(cs.GetAct(), cs.GetActArg_1(), cs.GetActArg_2())
 
 	sc := &protobuf.SC_13104{
 		Result:           proto.Uint32(0),

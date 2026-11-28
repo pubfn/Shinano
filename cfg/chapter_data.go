@@ -16,7 +16,7 @@ type Grid struct {
 	X        int
 	Y        int
 	Active   bool
-	GridType int
+	ItemType int
 }
 
 type chapter struct {
@@ -24,6 +24,7 @@ type chapter struct {
 	BossSpawnKillCount int     `json:"boss_refresh"`
 	Grid               []Grid  `json:"grids"`
 	Enemy              []Enemy `json:"expedition_id_weight_list"`
+	EnemyRefesh        []int   `json:"enemy_refresh"`
 }
 
 var ChapterData = map[uint32]chapter{}
@@ -78,7 +79,7 @@ func (g *Grid) UnmarshalJSON(data []byte) error {
 		g.Active = false
 	}
 
-	if err := json.Unmarshal(raw[3], &g.GridType); err != nil {
+	if err := json.Unmarshal(raw[3], &g.ItemType); err != nil {
 		return err
 	}
 	return nil

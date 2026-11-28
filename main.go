@@ -12,6 +12,7 @@ import (
 	"Shinano/constructor"
 	"Shinano/db"
 	"Shinano/packets"
+	"Shinano/repository/story"
 )
 
 func main() {
@@ -20,7 +21,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	builder := constructor.Builder{DB: db.Init()}
+	builder := constructor.Builder{DB: db.Init(), Chapter: &story.Chapter{}}
 	constructor.NewRegistry(&builder)
 	err = cfg.LoadGameData()
 	if err != nil {
